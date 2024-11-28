@@ -74,7 +74,7 @@ class _DockState extends State<Dock> {
   Widget build(BuildContext context) {
     return Container(
       key: _dockKey,
-      height: 90,
+      height: 120,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -97,6 +97,7 @@ class _DockState extends State<Dock> {
           final item = entry.value;
 
           final isActive = _activeIndex == index;
+          final showLabel = _activeIndex == index;
 
           final scale = isActive ? 1.2 : 1.0;
 
@@ -108,22 +109,24 @@ class _DockState extends State<Dock> {
             // onPanStart: (_) => setState(() => _activeIndex = index),
             // onPanEnd: (_) => setState(() => _activeIndex = null),
             child: MouseRegion(
-              onEnter: (_) => setState(() => showLabel = _activeIndex == index),
-              onExit: (_) => setState(() => showLabel = false),
+              onEnter: (_) => setState(() => _activeIndex = index),
+              onExit: (_) => setState(() => _activeIndex = 100),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (showLabel)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 4.0),
-                      child: Text(
-                        item['label'],
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                  // if (showLabel)
+                  SizedBox(
+                    height: 20,
+                    child: showLabel
+                        ? Text(
+                            item['label'],
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : null,
+                  ),
                   TweenAnimationBuilder<double>(
                     duration: const Duration(milliseconds: 200),
                     tween: Tween<double>(begin: 1.0, end: scale),

@@ -299,7 +299,11 @@ class _CustomReorderableListViewState extends State<CustomReorderableListView> {
 
     final Key itemGlobalKey =
         _ReorderableListViewChildGlobalKey(item.key!, this);
-
+    return CustomReorderableDragStartListener(
+      key: itemGlobalKey,
+      index: index,
+      child: item,
+    );
     if (widget.buildDefaultDragHandles) {
       switch (Theme.of(context).platform) {
         case TargetPlatform.linux:
@@ -358,11 +362,16 @@ class _CustomReorderableListViewState extends State<CustomReorderableListView> {
           );
       }
     }
-
-    return KeyedSubtree(
+    return CustomReorderableDragStartListener(
       key: itemGlobalKey,
+      index: index,
       child: item,
     );
+
+    // return KeyedSubtree(
+    //   key: itemGlobalKey,
+    //   child: item,
+    // );
   }
 
   @override

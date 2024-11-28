@@ -1304,7 +1304,6 @@ class CustomReorderableDragStartListener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Listener(
-      behavior: HitTestBehavior.translucent,
       onPointerDown: enabled
           ? (PointerDownEvent event) => _startDragging(context, event)
           : null,
